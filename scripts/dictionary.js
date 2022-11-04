@@ -11,24 +11,27 @@ chrome.contextMenus.create(
 //         fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${clickData.selectionText}`)
 //         .then((response) => response.json())
 //         .then((result) => {
-//             console.log(result);
+//             console.log(result, typeof(result));
 //         });
 //     }
 // );
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-    // Service worker cannot access the DOM, so alert() isn't available.
-    //  alert("Hello");
+chrome.contextMenus.onClicked.addListener((info, tab) => {    
     chrome.windows.create({
-      width: 350,
-      height: 250,
+      width: 200,
+      height: 400,
       top: 140,
       left: 1000,
       type: "popup",
-      url: "alert.html"
+      url: "templates/defn.html"
     });
-    console.log("Hello");
-    // chrome.runtime.sendMessage({"defn": "hola"});
+
+    chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+        if (msg.ready) {
+            console.log("Fire away!");
+            sendResponse({"text" : info.selectionText});
+        }
+    });
 });
 
 

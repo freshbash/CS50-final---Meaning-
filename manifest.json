@@ -3,9 +3,6 @@
     "name": "bar",
     "description": "Base Level Extension",
     "version": "1.0",
-    "action": {
-      "default_popup": "alert.html"
-    },
 
     "background": { 
       "service_worker": "scripts/dictionary.js"
